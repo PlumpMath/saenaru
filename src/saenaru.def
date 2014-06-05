@@ -1,0 +1,39 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;                                                                    ;;
+;;      SAENARU.DEF - Windows SAENARU                                 ;;
+;;                                                                    ;;
+;;                                                                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+LIBRARY         SAENARU
+
+EXPORTS
+                DLLEntry
+
+                ; IME DDI
+                ImeConversionList
+                ImeConfigure
+                ImeDestroy
+                ImeEscape
+                ImeInquire
+                ImeProcessKey
+                ImeSelect
+                ImeSetActiveContext
+                ImeToAsciiEx
+                NotifyIME
+                ImeRegisterWord
+                ImeUnregisterWord
+                ImeGetRegisterWordStyle
+                ImeEnumRegisterWord
+                ImeSetCompositionString
+                ImeGetImeMenuItems
+
+                SAENARUWndProc
+                CompStrWndProc
+                StatusWndProc
+                CandWndProc
+                GuideWndProc
+
+                GeneralDlgProc
+                AboutDlgProc
+                RegWordDlgProc
+                SelectDictionaryDlgProc

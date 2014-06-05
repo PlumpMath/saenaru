@@ -1,0 +1,93 @@
+TARGETPATH=obj
+TARGETTYPE=DYNLINK
+TARGETEXT=ime
+UMTYPE=windows
+DLLENTRY=DLLEntry
+DLLBASE=0x00500000
+
+#C_DEFINES=-DWINVER=0x501
+C_DEFINES=-DWINVER=0x500
+
+#
+#C_DEFINES=-DWINVER=0x40A -DNO_TSF
+#NO_TSF=1
+#
+
+!if "$(DDKBUILDENV)" == "chk"
+C_DEFINES=$(C_DEFINES) -DDEBUG=1 -DDEBUG_LV=103 -IGNORE:4311
+#MSC_OPTIMIZATION=-Zi -ZI -Yd -Od
+MSC_OPTIMIZATION=-Zi -Od -W3 -WX-
+!else
+MSC_OPTIMIZATION=-O2
+!endif
+
+MSC_WARNING_LEVEL= /W3 /WX-
+
+!if $(AMD64)
+LINKER_FLAGS= $(LINKER_FLAGS) /ignore:4210
+!endif
+
+NO_NTDLL=1
+
+# 아래의 라인을 반드시 넣어야 tsfcmd, tsfime가 붙는다 !!!
+USE_MSVCRT=1
+
+INCLUDES=.
+
+#DDK_LIB_PATH=D:\Micros~1\lib
+
+SOURCES= \
+        config.c \
+        data.c \
+        dic.c \
+        hangul.c \
+        hanjaidx.c \
+        saenaru.c \
+        reg.c \
+        imm.c \
+        immsec.c \
+        input.c \
+        process.c \
+        regword.c \
+        subs.c \
+        toascii.c \
+        ui.c \
+        uicand.c \
+        uicomp.c \
+        uiguide.c \
+        uistate.c
+
+!if "$(NO_TSF)" != "1"
+TSFSRCS= \
+	tsf.cpp \
+	btnime.cpp \
+	btncmd.cpp \
+	btnpad.cpp \
+	btnhlp.cpp \
+	btnext.cpp
+
+TSFLIBS= \
+        $(DDK_LIB_PATH)\oleaut32.lib \
+        $(DDK_LIB_PATH)\uuid.lib \
+        $(DDK_LIB_PATH)\uxtheme.lib \
+        $(DDK_LIB_PATH)\ole32.lib \
+        $(DDK_LIB_PATH)\shlwapi.lib
+!endif
+
+TARGETLIBS= \
+        $(DDK_LIB_PATH)\advapi32.lib \
+        $(DDK_LIB_PATH)\comctl32.lib \
+        $(DDK_LIB_PATH)\gdi32.lib \
+        $(DDK_LIB_PATH)\imm32.lib \
+        $(DDK_LIB_PATH)\kernel32.lib \
+        $(DDK_LIB_PATH)\user32.lib \
+        $(DDK_LIB_PATH)\htmlhelp.lib \
+	$(TSFLIBS)
+
+NTTARGETFILES=copyfile
+
+TARGETNAME=saenaru
+C_DEFINES=$(C_DEFINES) -DUNICODE -D_UNICODE
+SOURCES= $(SOURCES) $(TSFSRCS)\
+        saenaru.rc
+
