@@ -7,6 +7,17 @@ using System.Runtime.InteropServices;
 
 namespace KeyboNazCore
 {
+    [ComImport, 
+    Guid("0002E000-0000-0000-C000-000000000046"), 
+    InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface IEnumGUID
+    {
+        int Next(int celt, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)]Guid[] rgelt);
+        void Skip(int celt);
+        void Reset();
+        [return: MarshalAs(UnmanagedType.Interface)]
+        IEnumGUID Clone();
+    }
     /*
      * reference
      * http://blogs.msdn.com/b/adam_nathan/archive/2003/04/23/56635.aspx
@@ -30,6 +41,18 @@ namespace KeyboNazCore
             [In, MarshalAs(UnmanagedType.LPWStr)] String pchIconFile,
             [In] UInt32 cchFile,
             [In] UInt32 uIconIndex);
+        void ChangeCurrentLanguage([In] UInt16 langid);
+        void EnableLanguageProfile(
+            [In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
+            [In] UInt16 langid,
+            [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
+            [In, MarshalAs(UnmanagedType.Bool)] Boolean fEnable);
+        void EnableLanguageProfileByDefault(
+            [In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
+            [In] UInt16 langid,
+            [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
+            [In, MarshalAs(UnmanagedType.Bool)] Boolean fEnable);
+        void EnumInputProcessorInfo([Out] out IEnumGUID ppEnum);
 
         void Register([In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid);
     }
