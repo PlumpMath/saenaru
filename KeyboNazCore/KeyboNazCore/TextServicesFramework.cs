@@ -7,17 +7,27 @@ using System.Runtime.InteropServices;
 
 namespace KeyboNazCore
 {
+    //GUID http://stackoverflow.com/questions/2631120/com-interface-guid
     [ComImport, 
     Guid("0002E000-0000-0000-C000-000000000046"), 
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IEnumGUID
     {
-        int Next(int celt, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)]Guid[] rgelt);
-        void Skip(int celt);
+        Int32 Next(Int32 celt, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)] Guid[] rgelt);
+        void Skip(Int32 celt);
         void Reset();
         [return: MarshalAs(UnmanagedType.Interface)]
         IEnumGUID Clone();
     }
+
+    [ComImport,
+    Guid("3D61BF11-AC5F-42C8-A4CB-931BCC28C744"),
+    InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    public interface IEnumTfLanguageProfiles
+    {
+        void Clone([Out] IEnumTfLanguageProfiles ppEnum);
+    }
+
     /*
      * reference
      * http://blogs.msdn.com/b/adam_nathan/archive/2003/04/23/56635.aspx
@@ -53,7 +63,10 @@ namespace KeyboNazCore
             [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
             [In, MarshalAs(UnmanagedType.Bool)] Boolean fEnable);
         void EnumInputProcessorInfo([Out] out IEnumGUID ppEnum);
+        void EnumLanguageProfiles(
+            [In] UInt16 langid
 
+            );
         void Register([In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid);
     }
 
