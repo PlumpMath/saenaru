@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="comcat.cs" />
+    <Compile Include="msctf.cs" />
     <Compile Include="TextServicesFramework.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
