@@ -13,10 +13,14 @@ namespace KeyboNazCore
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IEnumGUID
     {
-        Int32 Next(Int32 celt, [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)] Guid[] rgelt);
-        void Skip(Int32 celt);
+        [PreserveSig]
+        Int32 Next(
+            UInt32 celt,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=0)] out Guid[] rgelt,
+            out UInt32 pceltFetched);
+        void Skip(UInt32 celt);
         void Reset();
-        [return: MarshalAs(UnmanagedType.Interface)]
+        [return: MarshalAs(UnmanagedType.IUnknown)]
         IEnumGUID Clone();
     }
 
@@ -25,7 +29,8 @@ namespace KeyboNazCore
     InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     public interface IEnumTfLanguageProfiles
     {
-        void Clone([Out] IEnumTfLanguageProfiles ppEnum);
+        [return: MarshalAs(UnmanagedType.IUnknown)]
+        IEnumTfLanguageProfiles Clone();
     }
 
     /*
@@ -39,35 +44,36 @@ namespace KeyboNazCore
     public interface ITfInputProcessorProfiles
     {
         void ActivateLaunguageProfile(
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
-            [In] UInt16 langid,
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidProfiles);
+            [MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
+            UInt16 langid,
+            [MarshalAs(UnmanagedType.LPStruct)] Guid guidProfiles);
         void AddLanguageProfile(
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
-            [In] UInt16 langid,
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
-            [In, MarshalAs(UnmanagedType.LPWStr)] String pchDesc,
-            [In] UInt32 cchDesc,
-            [In, MarshalAs(UnmanagedType.LPWStr)] String pchIconFile,
-            [In] UInt32 cchFile,
-            [In] UInt32 uIconIndex);
-        void ChangeCurrentLanguage([In] UInt16 langid);
+            [MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
+            UInt16 langid,
+            [MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
+            [MarshalAs(UnmanagedType.LPWStr)] String pchDesc,
+            UInt32 cchDesc,
+            [MarshalAs(UnmanagedType.LPWStr)] String pchIconFile,
+            UInt32 cchFile,
+            UInt32 uIconIndex);
+        void ChangeCurrentLanguage(UInt16 langid);
         void EnableLanguageProfile(
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
-            [In] UInt16 langid,
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
-            [In, MarshalAs(UnmanagedType.Bool)] Boolean fEnable);
+            [MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
+            UInt16 langid,
+            [MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
+            [MarshalAs(UnmanagedType.Bool)] Boolean fEnable);
         void EnableLanguageProfileByDefault(
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
-            [In] UInt16 langid,
-            [In, MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
-            [In, MarshalAs(UnmanagedType.Bool)] Boolean fEnable);
-        void EnumInputProcessorInfo([Out] out IEnumGUID ppEnum);
+            [MarshalAs(UnmanagedType.LPStruct)] Guid rclsid,
+            UInt16 langid,
+            [MarshalAs(UnmanagedType.LPStruct)] Guid guidProfile,
+            [MarshalAs(UnmanagedType.Bool)] Boolean fEnable);
+        [return: MarshalAs(UnmanagedType.IUnknown)]
+        IEnumGUID EnumInputProcessorInfo();
         void EnumLanguageProfiles(
-            [In] UInt16 langid
-
+            UInt16 langid
+            
             );
-        void Register([In, MarshalAs(UnmanagedType.LPStruct)] Guid rclsid);
+        void Register([MarshalAs(UnmanagedType.LPStruct)] Guid rclsid);
     }
 
     public class TextServicesFramework
