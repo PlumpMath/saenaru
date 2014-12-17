@@ -7,6 +7,16 @@ using System.Runtime.InteropServices;
 
 namespace KeyboNazCore
 {
+    /*
+     * used in Saenaru tsf.cpp:
+     * ITfThreadMgr
+     * ITfLangBarItemMgr
+     * ITfLangBarItem
+     * ITfSource
+     * ITfSystemLangBarItemSink
+     * 
+     * no ITfInputProcessorProfiles???? Why?
+     */
 
     //msctf.idl
     [ComImport,
